@@ -12,7 +12,7 @@
             "console": "integratedTerminal",
             // "args": ["-h"]
             // "args": ["-r", "bar", "-f", "files/a.txt", "files/b.txt"]
-            "args": ["--recursive", "-r", "abc", "-f", "files"]
+            "args": ["--recursive", "-r", "[3-5]", "-f", "files"]
             // "args": ["1", "2", "3", "4", "--sum"]
         }
     ]

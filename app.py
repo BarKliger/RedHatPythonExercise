@@ -2,17 +2,10 @@ import argparse
 import os
 import glob
 import re
-from typing import Pattern
 
-# parser.add_argument('integers', metavar='N', type=int, nargs='+',
-#                     help='an integer for the accumulator')
-# parser.add_argument('--sum', dest='accumulate', action='store_const',
-#                     const=sum, default=max,
-#                     help='sum the integers (default: find the max)')
 parser = argparse.ArgumentParser(description='Do Regex search on file/s, and print what has been found')
 print_options_group = parser.add_mutually_exclusive_group()
 parser.add_argument('-r', '--regex', type=str, required=True,help='The regex string used to search inside the files')
-# parser.add_argument('-f', '--files', type=str,help='The files to search the regex string against')
 parser.add_argument('-f', '--files', nargs="*", help='Path of a file or a folder of files.', type=str,default=[])
 parser.add_argument('--recursive', action='store_true', help='Search through subfolders')
 print_options_group.add_argument('-u', '--underscore', help='prints "^" under the matching text',action='store_true')
@@ -21,39 +14,41 @@ print_options_group.add_argument('-m', '--machine', help='generate machine reada
 parser.add_argument('-e', '--extension', default='', help='File extension to filter by.')
 args = parser.parse_args()
 
-def print_underscores(file, line, line_counter, match_start, match_end):
+def print_underscores(file, line, line_counter, matches):
+    str1 = ' ' * len(f"{file}:{line_counter}: ")
+    str2 = ''
+    for match in matches:
+        str2 = str2 + (' ' * (match.start() - len(str2))) + (('^' * (match.end() - match.start()))) #build the underscore line string
+    underscore_line = str1 + str2
     print(f"{file}:{line_counter}: {line}", end='')
-    print(' ' * (len(f"{file}:{line_counter}: ") + match_start) + ('^' * (match_end - match_start)))
+    print(underscore_line)
 
+def print_highlight(file, line, line_counter, matches):
+    
+    start_highlight = '\x1b[6;30;42m'
+    end__highlight = '\x1b[0m'
+    highlighted_str = ''
+    counter = 0
+    last_end = 0
+    for match in matches:
+        # ttttabcdefgabcdefg6786876abc
+        #     ^  
+        # 
+        highlighted_str = highlighted_str + line[counter:match.start()] + start_highlight + line[match.start():match.end()] + end__highlight #build the underscore line string
+        counter = match.end()
+        last_end = match.end()
+    if(counter <= len(line)):
+        highlighted_str = highlighted_str + line[last_end:len(line)]
+    # print(start_highlight + 'Success!' + end__highlight + 'bbbb' + start_highlight + 'Success!' + end__highlight)
+    print(f"{file}:{line_counter}: {highlighted_str}")
+    
 def main():
     print("Welcome to the Regex finder and Printer")
     print(args.regex)
     print(args.files)
     
-    text_to_search = R'''
-abcdefg
-abcdefg
-abcdef{args.regex}g
-123-456-7890
-123*456*7890
-123\456\7890
-\
-\\
-\\a\
-\\a\
-'''
-    
     pattern = re.compile(args.regex)
-    # print(re.search(pattern, text_to_search))
-    
-    # matches = pattern.finditer(text_to_search)
-    
-    # for match in matches:
-    #     print(match.span())
-    #     print(text_to_search[match.start():match.end()])
-        
-        
-        
+
     # Parse paths
     full_paths = [os.path.join(os.getcwd(), path) for path in args.files]
     files = set()
@@ -64,19 +59,18 @@ abcdef{args.regex}g
             files |= set(glob.glob(path + '/*' + args.extension))
 
     for f in files:
-        print(f)
+        # print(f)
         with open(f,'r',encoding='ascii') as file:
             lines = file.readlines()
             line_counter = 0
             for line in lines:
                 line_counter += 1
                 matches = pattern.finditer(line)
-                for match in matches:
-                    print_underscores(f, line, line_counter, match.start(), match.end())
-                    # print(f"{f}:{line_counter}: {line}", end='')
-                    # print(' ' * (len(f"{f}:{line_counter}: ") + match.start()), end='')
-                    # print('^' * (match.end() - match.start()), end='')
-                    # print()    
+                if(len(list(matches)) > 0):
+                    # matches = pattern.finditer(line)
+                    # print_underscores(f, line, line_counter, matches)
+                    matches = pattern.finditer(line)
+                    print_highlight(f, line, line_counter, matches)
 
 if __name__ == '__main__':
     main()
