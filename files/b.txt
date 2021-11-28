@@ -1,0 +1,10 @@
+fsd54s56 1d fd5a1bc2defg
+fsd54s56 1d fd5ab2c5defg
+fsd54s56 1d fd5ab3c4def{args.regex}g
+fsd54s56 1d fd5123-456-7890
+fsd54s56 1d fd5123*456*7890
+fsd54s56 1d fd5123\4561\7890
+fsd54s56 1d fd5\
+fsd54s56 1d fd5\\
+fsd54s56 1d fd5\\a\
+fsd54s56 1d fd5\\a\
