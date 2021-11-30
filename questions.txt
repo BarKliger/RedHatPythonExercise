@@ -1,2 +1,2 @@
-1. do you want to support recursive for files? want it as an argument?
-2. 
+1. do you want to support recursive option for directories? want it as an argument or by default?
+2. the machine print option is mutually exclusive to what you asked regarding "Multiple matches on single line are allowed, without overlapping". please provide a more precise instrcution as to how you want this machine print option to behave. 
