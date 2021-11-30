@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            // "args": ["-h"]
+            // "args": ["-r", "bar", "-f", "files/a.txt", "files/b.txt"]
+            "args": ["-r", "abc", "-f", "files", "-c"]
+            // "args": ["--recursive", "-r", "abc", "-f", "files", "-c"]
+            // "args": ["--recursive", "-r", "abc"]
+            // "args": ["1", "2", "3", "4", "--sum"]
+        }
+    ]
+}

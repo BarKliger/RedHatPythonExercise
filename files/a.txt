@@ -1,0 +1,13 @@
+123
+abcttttabcdefgabcdefg6786876abc888888888abc
+abcdefg
+abcdefgabcdefg
+123-456-7890
+123*456*7890
+abcdef{args.regex}g
+123\456\7890
+\
+\\
+abcdefg
+\\a\
+\\a\
