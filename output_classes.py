@@ -53,4 +53,5 @@ class MachineOutput(Output):
     def print_output(self, file, line, line_counter, matches):
         for match in matches:
             # self.print_fore_string()
-            print("{}:{}:{}:{}".format(file, line_counter, match.start(), line[match.start():match.end()]))
+            print("{}:{}:{}:{}".format(file, line_counter, match.start(),
+                                       line[match.start():match.end()]))
