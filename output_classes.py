@@ -6,13 +6,11 @@ class Output():
     @abc.abstractmethod
     def print_output(self):
         pass
-        # print(f"{self.file}:{self.line_counter}: ",end='')
 
 
 class DefaultOutput(Output):
 
     def print_output(self, file, line, line_counter, matches):
-        # self.print_fore_string()
         print(line, end='\n')
 
 
@@ -52,6 +50,5 @@ class MachineOutput(Output):
 
     def print_output(self, file, line, line_counter, matches):
         for match in matches:
-            # self.print_fore_string()
             print("{}:{}:{}:{}".format(file, line_counter, match.start(),
                                        line[match.start():match.end()]))
